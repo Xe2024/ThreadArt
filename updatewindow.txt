@@ -1,0 +1,20 @@
+
+UPDATE_WINDOW()  /in order to make a responsive gui which will update the window on different types of events like change in bounding box location , size of framenails etc
+
+design:
+  1. Define a Flexible Argument Structure:
+      Use a dictionary (dict) to store all the factors that might influence the update. This allows you to add or remove factors as needed without modifying the function signature.
+      Consider using a descriptive naming convention for keys in the dictionary to improve code readability.
+      def update_win
+      
+      ***divide the window into several modules like main-image-frame  , boundingBoxand selected image-frame , sliderwidgetfraem ,etc
+      ***Bind event handlers to UI elements (buttons, sliders, etc.) using widget.bind(event_type, function).
+      ***Within the event handler function, create a dictionary to store relevant information for the update.
+         --RELEVANT INFO FOR MAIN UPDATEFUNCTION
+              1.modules
+              2.function 
+              3.data(to be modified)
+      def update_window(update_data):
+        # ... (function body) 
+   
+  
