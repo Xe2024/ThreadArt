@@ -7,13 +7,22 @@ import math
 
 
 
-thread_width = 3
-thread_color = "blue"
 
-def drawLine(CANVAS,LINETUPLE):
+def drawLine(CANVAS,LINETUPLE,THREAD_WIDTH,THREAD_COLOR):
     L= LINETUPLE 
-    CANVAS.create_line(L[0],L[1],L[2],L[3],fill=thread_color, width=thread_width)
-def drawThreads( FRAMENAILPOINTS ,OX,OY , REDUCED_RESO_PIXEL_GAP):
+    CANVAS.create_line(L[0],L[1],L[2],L[3],fill=THREAD_COLOR, width=THREAD_WIDTH)
+
+
+
+
+def DrawMultipleThreads(CANVAS,THREADS ,THREAD_WIDTH,THREAD_COLOR):
+   for thread in THREADS:
+    CANVAS.create_line(thread[0],thread[1],thread[2],thread[3],fill=THREAD_COLOR, width=THREAD_WIDTH)
+
+
+def CreatePossibleThreads( FRAMENAILPOINTS ,OX,OY , REDUCED_RESO_PIXEL_GAP):
+    
+
     totalLines = []
     for i in range(len(FRAMENAILPOINTS)):
      
@@ -63,10 +72,7 @@ def drawThreads( FRAMENAILPOINTS ,OX,OY , REDUCED_RESO_PIXEL_GAP):
 
     #____Doing filteration of best line out of Lines[n], on the basis of darkness of the pixels lying on frame___
    
-    for lines in range(len(FRAMENAILPOINTS)):
-       for line in range(len(FRAMENAILPOINTS)-1):
-           for dot in totalLines[lines][line]:
-              pass
+    
 
 
     return totalLines              

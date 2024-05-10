@@ -5,8 +5,8 @@ from PIL import Image, ImageTk
 import tkinter as  tk
 import math
 from imageManipulation import Scale
-from Thread import drawLine , drawThreads
-
+from Thread import drawLine , CreatePossibleThreads , DrawMultipleThreads
+from threadalgo import getThreads 
 
 
 
@@ -75,7 +75,7 @@ def resizePhoto(maxWidth , imagePath):
 
 
 
-  return [ImageTk.PhotoImage(croppedImage), ImageTk.PhotoImage(grayscaledImage) , ImageTk.PhotoImage(finalImage)]
+  return [ImageTk.PhotoImage(croppedImage), ImageTk.PhotoImage(grayscaledImage) , ImageTk.PhotoImage(finalImage),finalImage]
 
 photo = resizePhoto(2*frameRadius,"assets/image/kitten.jpg")
 C.create_image(Ox,Oy, image= photo[0])
@@ -140,8 +140,15 @@ for i in range(framenailCount):
 
 
 # drawLine(C,(pointsList[0].real ,pointsList[0].imag , pointsList[98].real ,pointsList[98].imag))
-totalLines = drawThreads(pointsList,Ox,Oy,reducedReso_pixelgap)
+totalLines = CreatePossibleThreads(pointsList,Ox,Oy,reducedReso_pixelgap)
 
+Threads =getThreads(3,framenailCount,frameRadius,totalLines,photo[3],Ox,Oy)
+
+print("number of threads"+  str(len(Threads)))
+
+print(Threads)
+
+DrawMultipleThreads(C,Threads,3,"black")
 
 
 C.grid()
