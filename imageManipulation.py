@@ -3,7 +3,6 @@ from PIL import Image, ImageTk
 
 
 def Scale(REDUCEDRESO , FRAMERADIUS ):
-    print(len(REDUCEDRESO))
 
     finalImage = Image.new("L" , (2*FRAMERADIUS,2*FRAMERADIUS))
     finalImagePixelData = finalImage.load()
