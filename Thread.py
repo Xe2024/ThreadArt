@@ -56,5 +56,14 @@ def drawThreads( FRAMENAILPOINTS ,OX,OY , REDUCED_RESO_PIXEL_GAP):
 
        totalLines.append(lines)
     print("length of totalLines list" + str(len(totalLines))) 
-    print("length of lines through every point on the frame to other points on the frame "+ str(len(totalLines[0])))        
+    print("length of lines through every point on the frame to other points on the frame "+ str(len(totalLines[0])))   
+
+
+
+
+    #____Doing filteration of best line out of Lines[n], on the basis of darkness of the pixels lying on frame___
+
+   
+
+
     return totalLines              
