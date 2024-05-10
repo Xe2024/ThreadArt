@@ -4,6 +4,7 @@ from tkinter import Tk, Frame, Label
 from PIL import Image, ImageTk
 import tkinter as  tk
 import math
+from imageManipulation import Scale
 
 root = Tk()
 framenailCount = 120
@@ -13,12 +14,13 @@ Ox = CanvasWidth/2
 Oy = CanvasHeight/2
 frameRadius = 200
 pointsList = []
-reducedReso_Size = 40*40
+reducedReso_Size = 20*20
 reducedReso_pixelgap = int((2*frameRadius)/math.sqrt(reducedReso_Size))
 C = Canvas(root, bg="#2B2C2B",
            height=CanvasHeight, width=CanvasWidth)
 
-
+#_________________________________________________________________________________
+#image related things
 
 def resizePhoto(maxWidth , imagePath):
   
@@ -49,10 +51,9 @@ def resizePhoto(maxWidth , imagePath):
        for y in range(reducedReso_pixelgap):
          averagebigPixelSum += gsimageData[(reducedReso_pixelgap)*i+x , (reducedReso_pixelgap)*j+y]
     
-      innerlist_reducedreso.append(averagebigPixelSum/100) 
+      innerlist_reducedreso.append(int(averagebigPixelSum/(reducedReso_pixelgap**2))) 
        
     reducedreso.append(innerlist_reducedreso) 
-  print(reducedreso[0])
   reducedResoImage = Image.new('L', (int(math.sqrt(reducedReso_Size)),int(math.sqrt(reducedReso_Size))))
   reducedResoPixels = reducedResoImage.load()
   
@@ -62,21 +63,30 @@ def resizePhoto(maxWidth , imagePath):
       reducedResoPixels[x,y] =int(reducedreso[x][y])
   
   reducedResoImage.save("reducedreso.jpg")
+  
+  finalImage = Scale(reducedreso,frameRadius)
+  
 
 
 
 
 
-
-
-  return [ImageTk.PhotoImage(croppedImage), ImageTk.PhotoImage(grayscaledImage)]
+  return [ImageTk.PhotoImage(croppedImage), ImageTk.PhotoImage(grayscaledImage) , ImageTk.PhotoImage(finalImage)]
 
 photo = resizePhoto(2*frameRadius,"assets/image/kitten.jpg")
 C.create_image(Ox,Oy, image= photo[0])
 C.create_image(Ox+2*frameRadius , Oy , image = photo[1])
+C.create_image(Ox-2*frameRadius , Oy , image = photo[2] )
+
 
 C.create_oval(Ox - frameRadius, Oy - frameRadius, Ox + frameRadius, Oy + frameRadius, outline='black', fill='' ,width=5)
 
+
+
+
+#______________________________________________________________________________________________________
+
+#_________________________________________________________________________________________________________
 #creating N-points to place on the circular frame
 '''
 we will create these points using complex number rotations , where the angle difference  = 360/N and vectors from centre of the frame to those symmetrically placed n-points will be the C.numb represented by 
