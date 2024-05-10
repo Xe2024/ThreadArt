@@ -20,16 +20,19 @@ def drawThreads( FRAMENAILPOINTS ,OX,OY , REDUCED_RESO_PIXEL_GAP):
       #  print(i)
        lines=[]
        z = FRAMENAILPOINTS
-       for j in range(len(FRAMENAILPOINTS)-1):
+       for j in range(len(FRAMENAILPOINTS)):
         
         s = z[i] #start point of the thread
         if j != i :
         #    print(j)
            e = z[j] # endpoint of the thread
            def lineEq(xcoordinate):
-              
+              a =s.real
+              b = s.imag
+              c= e.real
+              d = e.imag
               x = xcoordinate
-              value = x*((s.imag - e.imag)/(s.real -e.real)) - (s.real)*((s.imag-s.real)/(s.real-e.real)) + s.imag
+              value = (x-a)*((b-d)/(a-c)) +b
               return value
            
            gap = REDUCED_RESO_PIXEL_GAP
