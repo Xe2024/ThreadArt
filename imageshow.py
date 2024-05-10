@@ -13,7 +13,8 @@ Ox = CanvasWidth/2
 Oy = CanvasHeight/2
 frameRadius = 200
 pointsList = []
-
+reducedReso_Size = 40*40
+reducedReso_pixelgap = int((2*frameRadius)/math.sqrt(reducedReso_Size))
 C = Canvas(root, bg="#2B2C2B",
            height=CanvasHeight, width=CanvasWidth)
 
@@ -40,20 +41,27 @@ def resizePhoto(maxWidth , imagePath):
   print(gsimageData)
 
   reducedreso = []
-  for i in range(10):
+  for i in range(int(math.sqrt(reducedReso_Size))):
     innerlist_reducedreso = []
-    for j in range(10):
+    for j in range(int(math.sqrt(reducedReso_Size))):
       averagebigPixelSum=0
-      for x in range(10):
-       for y in range(10):
-         averagebigPixelSum += gsimageData[10*i+x , 10*j+y]
+      for x in range(reducedReso_pixelgap):
+       for y in range(reducedReso_pixelgap):
+         averagebigPixelSum += gsimageData[(reducedReso_pixelgap)*i+x , (reducedReso_pixelgap)*j+y]
     
       innerlist_reducedreso.append(averagebigPixelSum/100) 
        
     reducedreso.append(innerlist_reducedreso) 
-  print(len(reducedreso))
+  print(reducedreso[0])
+  reducedResoImage = Image.new('L', (int(math.sqrt(reducedReso_Size)),int(math.sqrt(reducedReso_Size))))
+  reducedResoPixels = reducedResoImage.load()
   
+  for x in range(int(math.sqrt(reducedReso_Size))):
+    for y in range(int(math.sqrt(reducedReso_Size))):
 
+      reducedResoPixels[x,y] =int(reducedreso[x][y])
+  
+  reducedResoImage.save("reducedreso.jpg")
 
 
 
