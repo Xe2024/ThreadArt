@@ -141,17 +141,6 @@ for i in range(framenailCount):
 
 # drawLine(C,(pointsList[0].real ,pointsList[0].imag , pointsList[98].real ,pointsList[98].imag))
 totalLines = drawThreads(pointsList,Ox,Oy,reducedReso_pixelgap)
-print(totalLines[0][0])
-
-for o in range(10):
-  for _ in range(9):
-    for dot in totalLines[o][_]:
-      draw_point(dot[0],dot[1]  , "blue")
-
-
-
-
-
 
 
 
