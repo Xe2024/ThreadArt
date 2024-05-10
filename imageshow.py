@@ -8,7 +8,7 @@ import math
 root = Tk()
 framenailCount = 120
 CanvasHeight =650
-CanvasWidth = 1000
+CanvasWidth = 1200
 Ox = CanvasWidth/2
 Oy = CanvasHeight/2
 frameRadius = 200
@@ -26,11 +26,46 @@ def resizePhoto(maxWidth , imagePath):
   slope = (oH/oW) 
   nH = int(slope*maxWidth)
   newImage =  originalImage.resize((maxWidth,nH)) 
-  return ImageTk.PhotoImage(newImage)
+  imgcenX = maxWidth/2
+  imgcenY =(nH/2)
+  top_left_x =imgcenX-frameRadius
+  top_left_y =imgcenY -frameRadius
+  squareBox = (top_left_x ,top_left_y  , top_left_x+2*frameRadius , top_left_y + 2*frameRadius )
 
-photo = resizePhoto(370,"assets/image/kitten.jpg")
-C.create_image(Ox,Oy, image= photo)
+  croppedImage = newImage.crop(squareBox)
+  grayscaledImage = croppedImage.convert('L')
+  
 
+  gsimageData = grayscaledImage.load()
+  print(gsimageData)
+
+  reducedreso = []
+  for i in range(10):
+    innerlist_reducedreso = []
+    for j in range(10):
+      averagebigPixelSum=0
+      for x in range(10):
+       for y in range(10):
+         averagebigPixelSum += gsimageData[10*i+x , 10*j+y]
+    
+      innerlist_reducedreso.append(averagebigPixelSum/100) 
+       
+    reducedreso.append(innerlist_reducedreso) 
+  print(len(reducedreso))
+  
+
+
+
+
+
+
+
+
+  return [ImageTk.PhotoImage(croppedImage), ImageTk.PhotoImage(grayscaledImage)]
+
+photo = resizePhoto(2*frameRadius,"assets/image/kitten.jpg")
+C.create_image(Ox,Oy, image= photo[0])
+C.create_image(Ox+2*frameRadius , Oy , image = photo[1])
 
 C.create_oval(Ox - frameRadius, Oy - frameRadius, Ox + frameRadius, Oy + frameRadius, outline='black', fill='' ,width=5)
 
