@@ -5,7 +5,7 @@ from PIL import Image, ImageTk
 import tkinter as  tk
 import math
 from imageManipulation import Scale
-from Thread import drawLine , CreatePossibleThreads , DrawMultipleThreads
+from Thread import drawLine , CreatePossibleThreads , DrawMultipleThreads , display_coordinates
 from threadalgo import getThreads 
 
 
@@ -14,7 +14,7 @@ from threadalgo import getThreads
 
 
 root = Tk()
-framenailCount = 10
+framenailCount = 5
 CanvasHeight =650
 CanvasWidth = 1200
 Ox = CanvasWidth/2
@@ -44,9 +44,12 @@ def resizePhoto(maxWidth , imagePath):
 
   croppedImage = newImage.crop(squareBox)
   grayscaledImage = croppedImage.convert('L')
+  threshold = 100
+  grayscaledImagethreshold = grayscaledImage.point( lambda x: 255 if x > threshold else 0 )
+
   
 
-  gsimageData = grayscaledImage.load()
+  gsimageData = grayscaledImagethreshold.load()
   print(gsimageData)
   reducedreso = []
   for i in range(int(math.sqrt(reducedReso_Size))):
@@ -69,17 +72,17 @@ def resizePhoto(maxWidth , imagePath):
   reducedResoImage.save("reducedreso.jpg")
   
   finalImage = Scale(reducedreso,frameRadius)
-  
+  frameimage = Image.open("assets/image/Capture.jpg").resize((2*frameRadius,2*frameRadius))
 
 
 
 
 
-  return [ImageTk.PhotoImage(croppedImage), ImageTk.PhotoImage(grayscaledImage) , ImageTk.PhotoImage(finalImage),finalImage]
+  return [ImageTk.PhotoImage(croppedImage), ImageTk.PhotoImage(grayscaledImagethreshold) , ImageTk.PhotoImage(finalImage),finalImage , ImageTk.PhotoImage(frameimage)]
 
 photo = resizePhoto(2*frameRadius,"assets/image/kitten.jpg")
-C.create_image(Ox,Oy, image= photo[0])
-C.create_image(Ox+2*frameRadius , Oy , image = photo[1])
+C.create_image(Ox,Oy, image= photo[4])
+C.create_image(Ox+2*frameRadius , Oy , image = photo[0])
 C.create_image(Ox-2*frameRadius , Oy , image = photo[2] )
 
 
@@ -119,7 +122,7 @@ pointCalculator(framenailCount,Ox,Oy , frameRadius)
  #RELATED TO POINT AND LINEs ON THE FRAME
 #_________________________________________________________________________________
 # drawing points on the frame 
-def draw_point(x, y, color="white"):
+def draw_point(CANVAS , x, y, color="white"):
   """Draws a point on the canvas.
 
   Args:
@@ -128,7 +131,7 @@ def draw_point(x, y, color="white"):
       color: The color of the point (defaults to black).
   """
   radius = 4  # Adjust radius as needed
-  C.create_oval((x) - radius, (y) - radius,
+  CANVAS.create_oval((x) - radius, (y) - radius,
                      (x) + radius,( y) + radius,
                      fill=color)
 
@@ -136,19 +139,20 @@ for i in range(framenailCount):
   z = pointsList[i]
   x= z.real
   y =z.imag
-  draw_point(x,y,"white" );
 
+  draw_point(C,x,y,"white" );
+  display_coordinates(C,x,y)
 
 # drawLine(C,(pointsList[0].real ,pointsList[0].imag , pointsList[98].real ,pointsList[98].imag))
 totalLines = CreatePossibleThreads(pointsList,Ox,Oy,reducedReso_pixelgap)
 
-Threads =getThreads(3,framenailCount,frameRadius,totalLines,photo[3],Ox,Oy)
+Threads =getThreads(2,framenailCount,frameRadius,totalLines,photo[3],Ox,Oy,0)
 
 print("number of threads"+  str(len(Threads)))
 
-print(Threads)
+# print(Threads)
 
-DrawMultipleThreads(C,Threads,3,"black")
+DrawMultipleThreads(C,Threads,2,"black")
 
 
 C.grid()
