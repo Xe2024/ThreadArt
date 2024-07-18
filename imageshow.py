@@ -5,6 +5,9 @@ from PIL import Image, ImageTk
 import tkinter as  tk
 import math
 from imageManipulation import Scale
+import GreedyAlgoLoop
+import extraModules
+
 
 
 
@@ -12,7 +15,7 @@ root = Tk()
 
 screenWidth = root.winfo_screenwidth()
 screenHeight = root.winfo_screenheight()
-print(screenWidth , screenHeight)
+# print(screenWidth , screenHeight)
 
 
 framenailCount = 120
@@ -83,14 +86,16 @@ def resizePhoto(maxWidth , imagePath):
   return [ImageTk.PhotoImage(croppedImage), ImageTk.PhotoImage(grayscaledImage) , ImageTk.PhotoImage(finalImage)]
 
 photos = resizePhoto(2*frameRadius,"assets/image/kitten.jpg")
-C.create_image(Ox,Oy, image= photos[0])
+C.create_image(Ox,Oy, image= photos[2])
 C.create_image(Ox+2*frameRadius , Oy , image = photos[1])
-C.create_image(Ox-2*frameRadius , Oy , image = photos[2] )
+C.create_image(Ox-2*frameRadius , Oy , image = photos[0] )
 
 
 C.create_oval(Ox - frameRadius, Oy - frameRadius, Ox + frameRadius, Oy + frameRadius, outline='black', fill='' ,width=5)
 
-
+#creating axis
+C.create_line(Ox, 0, Ox, screenHeight, fill="red")
+C.create_line(0, Oy, screenWidth, Oy, fill="red")
 
 
 #______________________________________________________________________________________________________
@@ -145,8 +150,24 @@ for i in range(framenailCount):
   y =z.imag
   draw_point(x,y,Ox,Oy,"white" );
  
-# 
+#_______________________________________________________________________________________________________
 
+# Actual Greedy algorithm for calculating the suitable lines 
+#_______________________________________________________________________________________________________
+
+def findSuitableLines(CANVAS_CONTEXT, POINTS_lIST,REDUCED_RESO_IMAGE_PATH,FRAME_RADIUS , FRAME_NAIL_COUNT):
+  GreedyAlgoLoop.GreedyAlgoLoop(CANVAS_CONTEXT, POINTS_lIST,REDUCED_RESO_IMAGE_PATH,FRAME_RADIUS , FRAME_NAIL_COUNT)
+
+
+reducedResoImagePath = "C:/Users/COMPUTER/Desktop/ThreadArt/reducedreso.jpg"
+findSuitableLines(C , pointsList,reducedResoImagePath,frameRadius, framenailCount)
+
+
+def click(e):
+  pixelLocation =  extraModules.locatePixel(C , (e.x - Ox) , (e.y - Oy)  ,reducedResoImagePath , frameRadius ,root  )
+  extraModules.locatePixelCentre(pixelLocation[0] ,pixelLocation[1] ,10 ,root)
+# #_____just for debugging ___
+root.bind("<Button-1>", click)  # Left mouse button click
 
 
 
