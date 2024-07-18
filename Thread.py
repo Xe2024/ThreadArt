@@ -62,11 +62,8 @@ def drawThreads( FRAMENAILPOINTS ,OX,OY , REDUCED_RESO_PIXEL_GAP):
 
 
     #____Doing filteration of best line out of Lines[n], on the basis of darkness of the pixels lying on frame___
+
    
-    for lines in range(len(FRAMENAILPOINTS)):
-       for line in range(len(FRAMENAILPOINTS)-1):
-           for dot in totalLines[lines][line]:
-              pass
 
 
     return totalLines              
