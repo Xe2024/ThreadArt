@@ -143,10 +143,10 @@ for i in range(framenailCount):
 totalLines = drawThreads(pointsList,Ox,Oy,reducedReso_pixelgap)
 print(totalLines[0][0])
 
-for o in range(10):
-  for _ in range(9):
-    for dot in totalLines[o][_]:
-      draw_point(dot[0],dot[1]  , "blue")
+for _ in range(2):
+  for dot in totalLines[0][_]:
+    draw_point(dot[0],dot[1] -Oy , "blue")
+    print(dot[0],dot[1] -Oy)
 
 
 
