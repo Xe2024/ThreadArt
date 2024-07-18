@@ -5,16 +5,9 @@ from PIL import Image, ImageTk
 import tkinter as  tk
 import math
 from imageManipulation import Scale
-from Thread import drawLine , drawThreads
-
-
-
-
-
-
 
 root = Tk()
-framenailCount = 10
+framenailCount = 120
 CanvasHeight =650
 CanvasWidth = 1200
 Ox = CanvasWidth/2
@@ -106,20 +99,17 @@ def pointCalculator(FRAMENAILCOUNT , OX , OY , RADIUSOFFRAME ):
      y_comp = R*math.sin(i*theta)
      
 
-     a = round(x_comp +OX,2)
-     b= round(y_comp+OY,2)
+     a = round(x_comp,2)
+     b= round(y_comp,2)
      Z = a + b*(1j)
 
      # push the Z into the pointsList[]
      pointsList.append(Z)
 
-pointCalculator(framenailCount,Ox,Oy , frameRadius)
-#_______________________________________________________________________________________
+pointCalculator(120,Ox,Oy , frameRadius)
 
- #RELATED TO POINT AND LINEs ON THE FRAME
-#_________________________________________________________________________________
 # drawing points on the frame 
-def draw_point(x, y, color="white"):
+def draw_point(x, y,OX,OY, color="white"):
   """Draws a point on the canvas.
 
   Args:
@@ -128,33 +118,16 @@ def draw_point(x, y, color="white"):
       color: The color of the point (defaults to black).
   """
   radius = 4  # Adjust radius as needed
-  C.create_oval((x) - radius, (y) - radius,
-                     (x) + radius,( y) + radius,
+  C.create_oval((OX+x) - radius, (OY+y) - radius,
+                     (OX+x) + radius,( OY+y) + radius,
                      fill=color)
 
 for i in range(framenailCount):
   z = pointsList[i]
   x= z.real
   y =z.imag
-  draw_point(x,y,"white" );
-
-
-# drawLine(C,(pointsList[0].real ,pointsList[0].imag , pointsList[98].real ,pointsList[98].imag))
-totalLines = drawThreads(pointsList,Ox,Oy,reducedReso_pixelgap)
-print(totalLines[0][0])
-
-for _ in range(2):
-  for dot in totalLines[0][_]:
-    draw_point(dot[0],dot[1] -Oy , "blue")
-    print(dot[0],dot[1] -Oy)
-
-
-
-
-
-
-
-
+  draw_point(x,y,Ox,Oy,"white" );
+ 
 C.grid()
 
 
