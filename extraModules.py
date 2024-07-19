@@ -61,3 +61,29 @@ def locatePixelCentre(ROW,COL , PIXEL_GAP  ,ROOT):
        label = tk.Label(root, text= "y:" + str(y) +"  "+ "x:"+ str(x))
         #  Place the label at specific coordinates (x=50, y=50)
        label.place(x=300, y=50)      
+
+class lineDrawer:
+      def __init__(self,Canvas) :
+            self.Canvas =Canvas
+            self.X_o = None
+            self.Y_o = None
+            self.X_1 = None
+            self.Y_1 = None
+            self.lineId =None
+      def drawLine(self,event):
+            if self.X_o is None and self.Y_o is None :
+                  self.X_o = event.x
+                  self.Y_o = event.y
+            else :
+                  self.X_1 = event.x
+                  self.Y_1 = event.y
+                  if self.lineId :
+                        self.Canvas.delete(self.lineId)
+                  self.lineId = self.Canvas.create_line(self.X_o, self.Y_o, self.X_1, self.Y_1, fill="blue")
+                  self.X_o, self.Y_o = self.X_1, self.Y_1
+
+
+
+
+
+ 

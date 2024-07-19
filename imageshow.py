@@ -7,7 +7,7 @@ import math
 from imageManipulation import Scale
 import GreedyAlgoLoop
 import extraModules
-
+from extraModules import lineDrawer
 
 
 
@@ -155,17 +155,26 @@ for i in range(framenailCount):
 # Actual Greedy algorithm for calculating the suitable lines 
 #_______________________________________________________________________________________________________
 
-def findSuitableLines(CANVAS_CONTEXT, POINTS_lIST,REDUCED_RESO_IMAGE_PATH,FRAME_RADIUS , FRAME_NAIL_COUNT):
-  GreedyAlgoLoop.GreedyAlgoLoop(CANVAS_CONTEXT, POINTS_lIST,REDUCED_RESO_IMAGE_PATH,FRAME_RADIUS , FRAME_NAIL_COUNT)
+def findSuitableLines(CANVAS_CONTEXT, POINTS_lIST,REDUCED_RESO_IMAGE_PATH,FRAME_RADIUS , FRAME_NAIL_COUNT,ROOT):
+  GreedyAlgoLoop.GreedyAlgoLoop(CANVAS_CONTEXT, POINTS_lIST,REDUCED_RESO_IMAGE_PATH,FRAME_RADIUS , FRAME_NAIL_COUNT,ROOT)
 
 
 reducedResoImagePath = "C:/Users/COMPUTER/Desktop/ThreadArt/reducedreso.jpg"
-findSuitableLines(C , pointsList,reducedResoImagePath,frameRadius, framenailCount)
+findSuitableLines(C , pointsList,reducedResoImagePath,frameRadius, framenailCount,root)
+  
+  
 
 
+
+drawer =lineDrawer(C)
 def click(e):
+  drawer.drawLine(e)
+  
+
+        
   pixelLocation =  extraModules.locatePixel(C , (e.x - Ox) , (e.y - Oy)  ,reducedResoImagePath , frameRadius ,root  )
   extraModules.locatePixelCentre(pixelLocation[0] ,pixelLocation[1] ,10 ,root)
+
 # #_____just for debugging ___
 root.bind("<Button-1>", click)  # Left mouse button click
 

@@ -1,13 +1,14 @@
 import cv2
 import extraModules
+import threading
 
 
 
 
 
 
-
-def GreedyAlgoLoop(CANVAS_CONTEXT, POINTS_lIST,REDUCED_RESO_IMAGE_PATH,FRAME_RADIUS , FRAME_NAIL_COUNT):
+def GreedyAlgoLoop(CANVAS_CONTEXT, POINTS_lIST,REDUCED_RESO_IMAGE_PATH,FRAME_RADIUS , FRAME_NAIL_COUNT ,ROOT):
+    root = ROOT
     Ctx = CANVAS_CONTEXT
     no_of_nails = FRAME_NAIL_COUNT
     nails = POINTS_lIST
@@ -17,28 +18,38 @@ def GreedyAlgoLoop(CANVAS_CONTEXT, POINTS_lIST,REDUCED_RESO_IMAGE_PATH,FRAME_RAD
     # print(nails[n])
     # print(nails , len(nails))
 
+    #Setting the initial starting nail 
+    currentNail_no =0 
+    currentNail = nails[0]
 
+
+    while n<1:
+
+        Xo , Yo  = currentNail.real ,currentNail.imag
+        # print(Xo ,Yo)
     #________________________________________________________________________________________________________
-   
-
-    while n < 1 :
-           # first we will try to calculate the nearest image pixel to the starting and endpoint of the line which comes from nailslist
-           startingNail = nails[n]
-           X_o = startingNail.real # x_coordinate of starting nail
-           Y_o = startingNail.imag # y_coordinate of starting nail
-           
-           
-           for nailnumber in range(0,no_of_nails):
-                #  print(nailnumber)
-                otherNail = nails[nailnumber]
-
-                X_1 =otherNail.real
-                Y_1 =otherNail.imag
-                # print("X_o:" + str(X_o),"Y_o:" + str(Y_o) ,"X_1:" + str(X_1),"Y_1:" + str(Y_1) , nailnumber)
-
-           n =+1
+        
+        for nail in nails :
+            if nail.real != Xo  or nail.imag != Yo:
+                X1 = nail.real 
+                Y1 = nail.imag
+               
+                # print("Xo:"+str(Xo),"Yo:"+str(Yo),"X1:"+str(X1),"Y1:"+str(Y1) , " "+ str(N))
                 
 
+        n=1
+
+              
+     
+
+
+
+
+
+
+
+
+    
            
              
        
