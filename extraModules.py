@@ -81,9 +81,10 @@ class lineDrawer:
                         self.Canvas.delete(self.lineId)
                   self.lineId = self.Canvas.create_line(self.X_o, self.Y_o, self.X_1, self.Y_1, fill="blue")
                   self.X_o, self.Y_o = self.X_1, self.Y_1
+            
 
-
-
+            
+  
 
 
  
