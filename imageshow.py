@@ -1,3 +1,18 @@
+
+#ddddddd  EEEEEEE   V           V
+#      d  E          V         V
+#      D  EEEEEEE     V       V
+#      d  E            V     V
+#      D  E             V   V
+#ddddddd  EEEEEEE         V
+#DEV___________________DEV_______________DEV_____________________________________
+
+
+
+
+
+
+
 from tkinter import *
 from tkinter import ttk
 from tkinter import Tk, Frame, Label
